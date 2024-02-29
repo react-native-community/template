@@ -12,7 +12,7 @@ The template used by `npx @react-native-community/cli init` to bootstrap a React
 
 ## About
 
-This monorepository contains tools and helpers for React Native projects in form of a Command Line Tool (or CLI). This CLI is used directly by the `react-native` package and is not intended for use directly. We update it independently of React Native itself.
+This repository contains the template used by the React Native Community's Command Line Tool (or CLI) to bootstrap a React Native project.
 
 ## License
 
