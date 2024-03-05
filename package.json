@@ -1,0 +1,19 @@
+{
+  "name": "@react-native-community/template",
+  "version": "0.75.0",
+  "description": "The template used by `npx @react-native-community/cli init` to bootstrap a React Native application.",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "template/*"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
+  "homepage": "https://github.com/react-native-community/template/tree/main",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/react-native-community/template.git"
+  }
+}
