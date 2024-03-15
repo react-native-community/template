@@ -1,7 +1,7 @@
 # Resolve react_native_pods.rb with node to allow for hoisting
 require Pod::Executable.execute_command('node', ['-p',
   'require.resolve(
-    "react-native/scripts/react_native_pods.rb",
+     "@react-native-community/cli-platform-ios/autolinking.rb",
     {paths: [process.argv[1]]},
   )', __dir__]).strip
 
@@ -15,7 +15,7 @@ if linkage != nil
 end
 
 target 'HelloWorld' do
-  config = use_native_modules!
+  config = autolink_native_modules!
 
   use_react_native!(
     :path => config[:reactNativePath],
