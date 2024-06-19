@@ -1,4 +1,4 @@
-import { readFile, writeFile } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 
 /**
  * Function to get the Nightly version of the package, similar to the one used in React Native.
@@ -23,35 +23,32 @@ if (!process.argv[2]) {
 const targetVersion = process.argv[2];
 
 // We first update version of the template we're about to publish.
-readFile("package.json", "utf8", (err, data) => {
-  if (err) throw err;
-  const packageJson = JSON.parse(data);
-  if (targetVersion === "nightly") {
-    packageJson.version = getNightlyVersion(packageJson.version);
-  } else {
-    packageJson.version = targetVersion;
-  }
-  const updatedData = JSON.stringify(packageJson, null, 2);
-  writeFile("package.json", updatedData, "utf8", (err) => {
-    if (err) throw err;
-    console.log(`Template version updated to ${packageJson.version}`);
-  });
-});
+const packageJsonData = readFileSync("package.json", "utf8");
+const packageJson = JSON.parse(packageJsonData);
+if (targetVersion === "nightly") {
+  packageJson.version = getNightlyVersion(packageJson.version);
+} else {
+  packageJson.version = targetVersion;
+}
+const updatedPackageJsonData = JSON.stringify(packageJson, null, 2);
+writeFileSync("package.json", updatedPackageJsonData, "utf8");
+console.log(`Template version updated to ${packageJson.version}`);
 
 // And then we update the version of the dependencies in the template.
 // To be `nightly` as well.
-readFile("template/package.json", "utf8", (err, data) => {
-  if (err) throw err;
-  const packageJson = JSON.parse(data);
-  packageJson.dependencies["react-native"] = targetVersion;
-  Object.keys(packageJson.devDependencies).forEach((key) => {
-    if (key.startsWith("@react-native")) {
-      packageJson.devDependencies[key] = targetVersion;
-    }
-  });
-  const updatedData = JSON.stringify(packageJson, null, 2);
-  writeFile("template/package.json", updatedData, "utf8", (err) => {
-    if (err) throw err;
-    console.log(`Project dependencies updated to ${targetVersion}`);
-  });
+const templatePackageJsonData = readFileSync("template/package.json", "utf8");
+const templatePackageJson = JSON.parse(templatePackageJsonData);
+templatePackageJson.dependencies["react-native"] = targetVersion;
+Object.keys(templatePackageJson.devDependencies).forEach((key) => {
+  if (key.startsWith("@react-native")) {
+    templatePackageJson.devDependencies[key] = targetVersion;
+  }
 });
+const updatedTemplatePackageJsonData = JSON.stringify(
+  templatePackageJson,
+  null,
+  2
+);
+writeFileSync("template/package.json", updatedTemplatePackageJsonData, "utf8");
+
+console.log(`Project dependencies updated to ${targetVersion}`);
