@@ -36,7 +36,7 @@ jobs:
           if [[ $IS_LATEST_ON_NPM == "true" ]]; then
             npm dist-tag add @react-native-community/template@$VERSION latest
           fi
-          if [[ $VERSION == *"rc"* ]]; then
+          if [[ "$VERSION" == *"rc"* ]]; then
             npm dist-tag add @react-native-community/template@$VERSION next
           fi
           npm dist-tag add @react-native-community/template@$VERSION $GITHUB_REF_NAME
