@@ -1,0 +1,27 @@
+name: Nightly
+
+on:
+  workflow_dispatch:
+  # Instead of running every night we run
+  # Once for every commit in main as the traffic on this repo
+  # is lower than facebook/react-native.
+  push:
+    branches:
+      - main
+
+jobs:
+  publish_template_as_nightly:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+      - name: Setup node.js
+        uses: actions/setup-node@v4.0.0
+        with:
+          node-version: 18
+      - name: Update versions to nightly
+        run: node updateTemplateVersion.js nightly
+      - name: Publish NPM as Nightly
+        run: npm publish --dry-run --tag nightly
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
