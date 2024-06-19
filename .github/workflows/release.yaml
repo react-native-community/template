@@ -1,0 +1,46 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "The version of the template we want to release. For example 0.75.0-rc.0"
+        required: true
+        type: string
+      is_latest_on_npm:
+        description: "Whether we want to tag this template release as `latest` on NPM"
+        required: true
+        type: boolean
+        default: false
+
+jobs:
+  publish_template:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+      - name: Setup node.js
+        uses: actions/setup-node@v4.0.0
+        with:
+          node-version: 18
+      - name: Update versions to input one
+        run: node updateTemplateVersion.js "${{ inputs.version }}"
+      - name: Publish NPM
+        run: npm publish --dry-run --tag "${{ inputs. }}"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Set NPM tags
+        run: |
+          VERSION="${{ inputs.version }}"
+          IS_LATEST_ON_NPM="${{ inputs.is_latest_on_npm }}"
+          if [[ "$IS_LATEST_ON_NPM" == "true" ]]; then
+            npm dist-tag add @react-native-community/template@$VERSION latest
+          fi
+          if [[ "$VERSION" == *"rc"* ]]; then
+            npm dist-tag add @react-native-community/template@$VERSION next
+          fi
+          if [[ "$GITHUB_REF_NAME" == *"-stable" ]]; then
+            npm dist-tag add @react-native-community/template@$VERSION $GITHUB_REF_NAME
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
