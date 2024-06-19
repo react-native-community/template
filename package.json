@@ -1,6 +1,6 @@
 {
   "name": "@react-native-community/template",
-  "version": "0.0.4",
+  "version": "0.76.0-main",
   "description": "The template used by `npx @react-native-community/cli init` to bootstrap a React Native application.",
   "license": "MIT",
   "publishConfig": {
@@ -19,4 +19,3 @@
     "url": "https://github.com/react-native-community/template.git"
   }
 }
-
