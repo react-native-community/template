@@ -3,6 +3,7 @@
   "version": "0.75.0-rc.0",
   "description": "The template used by `npx @react-native-community/cli init` to bootstrap a React Native application.",
   "license": "MIT",
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },
