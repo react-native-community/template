@@ -26,7 +26,7 @@ jobs:
       - name: Update versions to input one
         run: node updateTemplateVersion.js "${{ inputs.version }}"
       - name: Publish NPM
-        run: npm publish --dry-run --tag "${{ inputs. }}"
+        run: npm publish --dry-run
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Set NPM tags
