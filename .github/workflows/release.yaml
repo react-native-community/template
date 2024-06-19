@@ -33,7 +33,7 @@ jobs:
         run: |
           VERSION="${{ inputs.version }}"
           IS_LATEST_ON_NPM="${{ inputs.is_latest_on_npm }}"
-          if [[ $IS_LATEST_ON_NPM == "true" ]]; then
+          if [[ "$IS_LATEST_ON_NPM" == "true" ]]; then
             npm dist-tag add @react-native-community/template@$VERSION latest
           fi
           if [[ "$VERSION" == *"rc"* ]]; then
