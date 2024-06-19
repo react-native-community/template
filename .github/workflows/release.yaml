@@ -39,5 +39,6 @@ jobs:
           if [[ $VERSION == *"rc"* ]]; then
             npm dist-tag add @react-native-community/template@$VERSION next
           fi
+          npm dist-tag add @react-native-community/template@$VERSION $GITHUB_REF_NAME
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
