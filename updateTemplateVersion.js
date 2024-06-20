@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from "fs";
+const fs = require("fs");
 
 /**
  * Function to get the Nightly version of the package, similar to the one used in React Native.
@@ -23,7 +23,7 @@ if (!process.argv[2]) {
 const targetVersion = process.argv[2];
 
 // We first update version of the template we're about to publish.
-const packageJsonData = readFileSync("package.json", "utf8");
+const packageJsonData = fs.readFileSync("package.json", "utf8");
 const packageJson = JSON.parse(packageJsonData);
 if (targetVersion === "nightly") {
   packageJson.version = getNightlyVersion(packageJson.version);
@@ -31,5 +31,5 @@ if (targetVersion === "nightly") {
   packageJson.version = targetVersion;
 }
 const updatedPackageJsonData = JSON.stringify(packageJson, null, 2);
-writeFileSync("package.json", updatedPackageJsonData, "utf8");
+fs.writeFileSync("package.json", updatedPackageJsonData, "utf8");
 console.log(`Template version updated to ${packageJson.version}`);
