@@ -22,6 +22,8 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: Update versions to nightly
         run: node ./scripts/updateTemplateVersion.js nightly
+      - name: Update template/package.json to nightly react-native + @react-native
+        run: node ./scripts/updateReactNativeVersion.js nightly
       - name: Publish NPM as Nightly
         run: npm publish --tag nightly
         env:

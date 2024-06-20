@@ -32,6 +32,8 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: Update versions to input one
         run: node ./scripts/updateTemplateVersion.js "${{ inputs.version }}"
+      - name: Update template/package.json to nightly react-native + @react-native
+        run: node ./scripts/updateReactNativeVersion.js "${{ inputs.version }}"
       - name: Create corresponding commit & git tag
         run: |
           git config --global user.name 'React Native Bot'
