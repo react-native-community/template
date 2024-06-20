@@ -22,6 +22,6 @@ jobs:
       - name: Update versions to nightly
         run: node updateTemplateVersion.js nightly
       - name: Publish NPM as Nightly
-        run: npm publish --dry-run --tag nightly
+        run: npm publish --tag nightly
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
