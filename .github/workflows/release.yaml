@@ -31,7 +31,7 @@ jobs:
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
       - name: Update versions to input one
-        run: node updateTemplateVersion.js "${{ inputs.version }}"
+        run: node ./scripts/updateTemplateVersion.js "${{ inputs.version }}"
       - name: Create corresponding commit & git tag
         run: |
           git config --global user.name 'React Native Bot'

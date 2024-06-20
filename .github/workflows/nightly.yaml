@@ -21,7 +21,7 @@ jobs:
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
       - name: Update versions to nightly
-        run: node updateTemplateVersion.js nightly
+        run: node ./scripts/updateTemplateVersion.js nightly
       - name: Publish NPM as Nightly
         run: npm publish --tag nightly
         env:
