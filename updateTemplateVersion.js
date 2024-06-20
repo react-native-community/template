@@ -33,22 +33,3 @@ if (targetVersion === "nightly") {
 const updatedPackageJsonData = JSON.stringify(packageJson, null, 2);
 writeFileSync("package.json", updatedPackageJsonData, "utf8");
 console.log(`Template version updated to ${packageJson.version}`);
-
-// And then we update the version of the dependencies in the template.
-// To be `nightly` as well.
-const templatePackageJsonData = readFileSync("template/package.json", "utf8");
-const templatePackageJson = JSON.parse(templatePackageJsonData);
-templatePackageJson.dependencies["react-native"] = targetVersion;
-Object.keys(templatePackageJson.devDependencies).forEach((key) => {
-  if (key.startsWith("@react-native")) {
-    templatePackageJson.devDependencies[key] = targetVersion;
-  }
-});
-const updatedTemplatePackageJsonData = JSON.stringify(
-  templatePackageJson,
-  null,
-  2
-);
-writeFileSync("template/package.json", updatedTemplatePackageJsonData, "utf8");
-
-console.log(`Project dependencies updated to ${targetVersion}`);
