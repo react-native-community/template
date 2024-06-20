@@ -17,6 +17,12 @@ jobs:
   publish_template:
     runs-on: ubuntu-latest
     steps:
+      - name: Safeguard against branch name
+        run: |
+          if [[ "$GITHUB_REF_NAME" != *-stable ]]; then
+            echo "Error: This workflow can only be executed from a branch ending with '-stable'."
+            exit 1
+          fi
       - name: Checkout
         uses: actions/checkout@v4.1.1
       - name: Setup node.js
@@ -24,18 +30,16 @@ jobs:
         with:
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
-      - name: Create corresponding git tag
-        uses: actions/github-script@v5
-        with:
-          script: |
-            github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'refs/tags/${{ inputs.version }}',
-              sha: context.sha
-            })
       - name: Update versions to input one
         run: node updateTemplateVersion.js "${{ inputs.version }}"
+      - name: Create corresponding commit & git tag
+        run: |
+          git config --global user.name 'React Native Bot'
+          git config --global user.email 'bot@reactnative.dev'
+          git commit -am "Bumping template to ${{ input.version }}"
+          git push
+          git tag ${{ input.version }}
+          git push --tags
       - name: Publish NPM
         run: npm publish
         env:
