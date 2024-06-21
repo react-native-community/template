@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from "fs";
+const { readFileSync, writeFileSync } = require('fs');
 
 /**
  * Function to get the Nightly version of the package, similar to the one used in React Native.
@@ -6,7 +6,7 @@ import { readFileSync, writeFileSync } from "fs";
  * `0.75.0-nightly-20241010-abcd1234`
  */
 function getNightlyVersion(originalVersion) {
-  const version = originalVersion.split("-")[0];
+  const version = originalVersion.split('-')[0];
   const date = new Date();
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -17,19 +17,19 @@ function getNightlyVersion(originalVersion) {
 }
 
 if (!process.argv[2]) {
-  console.error("Please provide a version to update the template to.");
+  console.error('Please provide a version to update the template to.');
   process.exit(1);
 }
 const targetVersion = process.argv[2];
 
 // We first update version of the template we're about to publish.
-const packageJsonData = readFileSync("package.json", "utf8");
+const packageJsonData = readFileSync('package.json', 'utf8');
 const packageJson = JSON.parse(packageJsonData);
-if (targetVersion === "nightly") {
+if (targetVersion === 'nightly') {
   packageJson.version = getNightlyVersion(packageJson.version);
 } else {
   packageJson.version = targetVersion;
 }
 const updatedPackageJsonData = JSON.stringify(packageJson, null, 2);
-writeFileSync("package.json", updatedPackageJsonData, "utf8");
+writeFileSync('package.json', updatedPackageJsonData, 'utf8');
 console.log(`Template version updated to ${packageJson.version}`);

@@ -1,8 +1,8 @@
-const fs = require("fs");
-const { npmMaterializeVersion } = require("./lib/lib.js");
+const fs = require('fs');
+const { npmMaterializeVersion } = require('./lib/lib.js');
 
 function updateDependencies(pkgJson, update) {
-  console.log("Changing package.json dependencies:");
+  console.log('Changing package.json dependencies:');
 
   for (const [pkg, value] of Object.entries(update.dependencies ?? {})) {
     const old = pkgJson.dependencies[pkg];
@@ -27,7 +27,7 @@ function updateDependencies(pkgJson, update) {
   return pkgJson;
 }
 
-const REACT_NATIVE_SCOPE = "@react-native/";
+const REACT_NATIVE_SCOPE = '@react-native/';
 
 /**
  * Packages that are scoped under @react-native need a consistent version
@@ -43,20 +43,20 @@ function normalizeReactNativeDeps(deps, version) {
 }
 
 async function main(version) {
-  const PKG_JSON_PATH = "template/package.json";
+  const PKG_JSON_PATH = 'template/package.json';
   // Update the react-native dependency if using the new @react-native-community/template.
   // We can figure this out as it ships with react-native@1000.0.0 set to a dummy version.
-  let pkgJson = JSON.parse(fs.readFileSync(PKG_JSON_PATH, "utf8"));
+  let pkgJson = JSON.parse(fs.readFileSync(PKG_JSON_PATH, 'utf8'));
 
   // Materialize a tag to a version.  E.g. next -> 0.75.0-rc.0
-  const concreteVersion = await npmMaterializeVersion("react-native", version);
+  const concreteVersion = await npmMaterializeVersion('react-native', version);
   console.log(
     `Normalizing: react-native@${version} -> react-native@${concreteVersion}`,
   );
 
   pkgJson = updateDependencies(pkgJson, {
     dependencies: {
-      "react-native": concreteVersion,
+      'react-native': concreteVersion,
       ...normalizeReactNativeDeps(pkgJson.dependencies, concreteVersion),
     },
     devDependencies: {
@@ -64,9 +64,40 @@ async function main(version) {
     },
   });
 
-  const updated = JSON.stringify(pkgJson, null, 2);
-  console.log(`Writing update package.json to ${PKG_JSON_PATH}:\n\n${updated}`);
+  let updated = JSON.stringify(pkgJson, null, 2);
+  console.log(
+    `\nWriting update template/package.json to ${PKG_JSON_PATH}:\n\n${updated}`,
+  );
   fs.writeFileSync(PKG_JSON_PATH, updated);
+
+  // 2. Update the scripts.version field in the top level package.json. This lets us leverage
+  //    the https://registry.npmjs.org/@react-native-community/template API:
+  //
+  //  "name": "@react-native-community/template",
+  //  "dist-tags": {
+  //    ...
+  //    "0.75-stable": "0.75.0-rc.0"
+  //  },
+  //  "versions": {
+  //    "0.75.0-rc.0": {
+  //      "name": "@react-native-community/template",
+  //      "version": "0.75.0-rc.0",
+  //      "scripts": {
+  //        "version": "0.75.1"
+  //        ...
+  //      },
+  //
+  //  We can then correlate earlier version of react-native with earlier template. Significantly
+  //  none of this is 'user facing'.
+  const PKG_JSON_ROOT_PATH = './package.json';
+  pkgJson = JSON.parse(fs.readFileSync(PKG_JSON_ROOT_PATH, 'utf8'));
+  pkgJson.scripts ??= {};
+  pkgJson.scripts.version = concreteVersion;
+  updated = JSON.stringify(pkgJson, null, 2);
+  console.log(
+    `\nWriting update package.json to ${PKG_JSON_ROOT_PATH}:\n\n${updated}`,
+  );
+  fs.writeFileSync(PKG_JSON_ROOT_PATH, updated);
 }
 
 if (require.main === module) {
