@@ -38,9 +38,9 @@ jobs:
         run: |
           git config --global user.name 'React Native Bot'
           git config --global user.email 'bot@reactnative.dev'
-          git commit -am "Bumping template to ${{ input.version }}"
+          git commit -am "Bumping template to ${{ inputs.version }}"
           git push
-          git tag ${{ input.version }}
+          git tag ${{ inputs.version }}
           git push --tags
       - name: Publish NPM
         run: npm publish
