@@ -1,12 +1,12 @@
-const {execSync} = require('child_process');
+const { execSync } = require('child_process');
 
 const registry = getNpmRegistryUrl();
 
 function getNpmRegistryUrl() {
   try {
-    return execSync("npm config get registry").toString().trim();
+    return execSync('npm config get registry').toString().trim();
   } catch {
-    return "https://registry.npmjs.org/";
+    return 'https://registry.npmjs.org/';
   }
 }
 

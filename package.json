@@ -6,6 +6,8 @@
   "publishConfig": {
     "access": "public"
   },
+  "scripts": {},
+  "type": "commonjs",
   "files": [
     "template/*",
     "template.config.js"
@@ -15,6 +17,6 @@
   "homepage": "https://github.com/react-native-community/template/tree/main",
   "repository": {
     "type": "git",
-    "url": "https://github.com/react-native-community/template.git"
+    "url": "git+https://github.com/react-native-community/template.git"
   }
 }
