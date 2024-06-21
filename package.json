@@ -6,7 +6,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "type": "module",
   "files": [
     "template/*",
     "template.config.js"
