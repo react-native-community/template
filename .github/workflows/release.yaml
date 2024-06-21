@@ -40,7 +40,7 @@ jobs:
           git config --global user.email 'bot@reactnative.dev'
           git commit -am "Bumping template to ${{ input.version }}"
           git push
-          git tag ${{ input.version }}
+          git tag "${{ input.version }}"
           git push --tags
       - name: Publish NPM
         run: npm publish
