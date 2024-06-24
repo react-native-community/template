@@ -1,5 +1,4 @@
 const fs = require('fs');
-const { npmMaterializeVersion } = require('./lib/lib.js');
 
 function updateDependencies(pkgJson, update) {
   console.log('Changing package.json dependencies:');
@@ -48,19 +47,13 @@ async function main(version) {
   // We can figure this out as it ships with react-native@1000.0.0 set to a dummy version.
   let pkgJson = JSON.parse(fs.readFileSync(PKG_JSON_PATH, 'utf8'));
 
-  // Materialize a tag to a version.  E.g. next -> 0.75.0-rc.0
-  const concreteVersion = await npmMaterializeVersion('react-native', version);
-  console.log(
-    `Normalizing: react-native@${version} -> react-native@${concreteVersion}`,
-  );
-
   pkgJson = updateDependencies(pkgJson, {
     dependencies: {
-      'react-native': concreteVersion,
-      ...normalizeReactNativeDeps(pkgJson.dependencies, concreteVersion),
+      'react-native': version,
+      ...normalizeReactNativeDeps(pkgJson.dependencies, version),
     },
     devDependencies: {
-      ...normalizeReactNativeDeps(pkgJson.devDependencies, concreteVersion),
+      ...normalizeReactNativeDeps(pkgJson.devDependencies, version),
     },
   });
 
@@ -92,7 +85,7 @@ async function main(version) {
   const PKG_JSON_ROOT_PATH = './package.json';
   pkgJson = JSON.parse(fs.readFileSync(PKG_JSON_ROOT_PATH, 'utf8'));
   pkgJson.scripts ??= {};
-  pkgJson.scripts.version = concreteVersion;
+  pkgJson.scripts.version = version;
   updated = JSON.stringify(pkgJson, null, 2);
   console.log(
     `\nWriting update package.json to ${PKG_JSON_ROOT_PATH}:\n\n${updated}`,
