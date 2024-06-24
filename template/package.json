@@ -1,6 +1,6 @@
 {
   "name": "HelloWorld",
-  "version": "0.75.0-rc.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
