@@ -1,43 +1,45 @@
-name: Release
+name: Release from React Native
 
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: "The version of the template we want to release. For example 0.75.0-rc.0"
-        required: true
-        type: string
-      is_latest_on_npm:
-        description: "Whether we want to tag this template release as `latest` on NPM"
-        required: true
-        type: boolean
-        default: false
+  repository_dispatches:
+    types: [release]
 
-# NOTE: Changes here need to be reflected in automated.yaml
+# NOTE: Changes here need to be reflected in release.yaml
 jobs:
-  publish_template:
+  publish_template_automation:
     runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ github.events.client_payload.version }}
     steps:
       - name: Safeguard against branch name
         run: |
-          if [[ "$GITHUB_REF_NAME" != *-stable ]]; then
+          if [[ "$BRANCH" != *-stable ]]; then
             echo "Error: This workflow can only be executed from a branch ending with '-stable'."
             exit 1
           fi
       - name: Checkout
         uses: actions/checkout@v4.1.1
+      - name: Move to MAJOR.MINOR-stable or create if it doesn't exist
+        run: |
+          VERSION=$(grep -E '\d+\.\d+' <<< "$VERSION" | awk '{ print "branch="$0"-stable" }')
+          if ! git ls-remote -q --exit-code --heads origin $VERSION > /dev/null; then
+            echo "Creating missing release branch \"$VERSION\""
+            git checkout -B "$VERSION"
+            git push --set-upstream origin "$VERSION"
+          else
+            git checkout "$VERSION"
+          fi
       - name: Setup node.js
         uses: actions/setup-node@v4.0.0
         with:
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
       - name: Update versions to input one
-        run: node ./scripts/updateTemplateVersion.js "${{ inputs.version }}"
+        run: node ./scripts/updateTemplateVersion.js "$VERSION"
       - name: Update template/package.json to nightly react-native + @react-native
-        run: node ./scripts/updateReactNativeVersion.js "${{ inputs.version }}"
+        run: node ./scripts/updateReactNativeVersion.js "$VERSION"
       - name: Create corresponding commit & git tag
         run: |
-          VERSION="${{ inputs.version }}"
           git config --global user.name 'React Native Bot'
           git config --global user.email 'bot@reactnative.dev'
           git commit -am "Bumping template to $VERSION"
@@ -50,11 +52,6 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Set NPM tags
         run: |
-          VERSION="${{ inputs.version }}"
-          IS_LATEST_ON_NPM="${{ inputs.is_latest_on_npm }}"
-          if [[ "$IS_LATEST_ON_NPM" == "true" ]]; then
-            npm dist-tag add @react-native-community/template@$VERSION latest
-          fi
           if [[ "$VERSION" == *"rc"* ]]; then
             npm dist-tag add @react-native-community/template@$VERSION next
           fi
@@ -63,3 +60,4 @@ jobs:
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
