@@ -1,5 +1,5 @@
 {
-  "name": "@react-native-community/template",
+  "name": "@callstack/visionos-template",
   "version": "0.79.6",
   "description": "The template used by `npx @react-native-community/cli init` to bootstrap a React Native application.",
   "license": "MIT",
@@ -13,7 +13,8 @@
   "type": "commonjs",
   "files": [
     "template/*",
-    "template.config.js"
+    "template.config.js",
+    "postInitScript.js"
   ],
   "dependencies": {},
   "devDependencies": {
