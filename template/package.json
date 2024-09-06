@@ -14,9 +14,9 @@
     "react-native": "1000.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
-    "@babel/preset-env": "^7.20.0",
-    "@babel/runtime": "^7.20.0",
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/runtime": "^7.25.0",
     "@react-native-community/cli": "14.0.0-alpha.11",
     "@react-native-community/cli-platform-android": "14.0.0-alpha.11",
     "@react-native-community/cli-platform-ios": "14.0.0-alpha.11",
