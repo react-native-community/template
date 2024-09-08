@@ -59,7 +59,7 @@ jobs:
       - name: Set NPM tags
         run: |
           NPM=(echo npm)
-          if [ "${{ inputs.dry_run }}" = "true" ]; then
+          if [ "${{ inputs.dry_run }}" = "false" ]; then
             NPM=(npm)
           fi
           IS_LATEST_ON_NPM="${{ inputs.is_latest_on_npm }}"
