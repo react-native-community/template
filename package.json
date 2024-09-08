@@ -6,14 +6,19 @@
   "publishConfig": {
     "access": "public"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "jest"
+  },
   "type": "commonjs",
   "files": [
     "template/*",
     "template.config.js"
   ],
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "semver": "^7.6.3"
+  },
   "homepage": "https://github.com/react-native-community/template/tree/main",
   "repository": {
     "type": "git",
