@@ -42,7 +42,7 @@ jobs:
         run: node ./scripts/updateReactNativeVersion.js "${{ inputs.version }}"
       - name: Create corresponding commit & git tag
         run: |
-          GIT=$([ "${{ inputs.dry_run }}" = "true" ] && "echo git" || "git";
+          GIT=$([ "${{ inputs.dry_run }}" = "true" ] && "echo git" || "git");
           $GIT config --global user.name 'React Native Bot'
           $GIT config --global user.email 'bot@reactnative.dev'
           $GIT commit -am "Bumping template to $VERSION"
@@ -55,7 +55,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Set NPM tags
         run: |
-          NPM=$([ "${{ inputs.dry_run }}" = "true" ] && "echo npm" || "npm";
+          NPM=$([ "${{ inputs.dry_run }}" = "true" ] && "echo npm" || "npm");
           IS_LATEST_ON_NPM="${{ inputs.is_latest_on_npm }}"
           if [[ "$IS_LATEST_ON_NPM" == "true" ]]; then
             $NPM dist-tag add @react-native-community/template@$VERSION latest
