@@ -35,7 +35,7 @@ jobs:
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
       - name: Determine new template version
-        run: echo "VERSION=$(./scripts/bumpedTemplateVersion.sh \"${{ inputs.version }}\")" >> $GITHUB_ENV
+        run: echo "VERSION=$(./scripts/bumpedTemplateVersion.sh ${{ inputs.version }})" >> $GITHUB_ENV
       - name: Update versions to input one
         run: node ./scripts/updateTemplateVersion.js $VERSION
       - name: Update template/package.json to nightly react-native + @react-native
