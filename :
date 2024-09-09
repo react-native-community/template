@@ -1,0 +1,30 @@
+Revert React from 19 to 18.3.1 (#40)
+
+* Revert "Mirror - Fix tests for React 19"
+
+This reverts commit 8ae99d92dab23e605ea42b848eb78a467344c4dc.
+
+* Revert "RN/Relay: Bump Dependency to React 19 (#44990)"
+
+This reverts commit 38dbc8c90655c2d78dc6ac5de2cf884e05efe887.
+# Conflicts:
+#	template/package.json
+#
+# It looks like you may be committing a cherry-pick.
+# If this is not correct, please run
+#	git update-ref -d CHERRY_PICK_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Mon Jul 29 14:37:27 2024 +0100
+#
+# On branch 0.76-stable
+# You are currently cherry-picking commit 9eb6e5b.
+#
+# Changes to be committed:
+#	modified:   template/__tests__/App.test.tsx
+#	modified:   template/package.json
+#
