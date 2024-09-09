@@ -35,36 +35,42 @@ jobs:
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
       - name: Determine new template version
-        run: echo "VERSION=$(./scripts/bumpedTemplateVersion.sh \"${{ inputs.version }}\")" >> $GITHUB_ENV
+        run: echo "VERSION=$(./scripts/bumpedTemplateVersion.sh ${{ inputs.version }})" >> $GITHUB_ENV
       - name: Update versions to input one
         run: node ./scripts/updateTemplateVersion.js $VERSION
       - name: Update template/package.json to nightly react-native + @react-native
         run: node ./scripts/updateReactNativeVersion.js "${{ inputs.version }}"
       - name: Create corresponding commit & git tag
         run: |
-          GIT=$([ "${{ inputs.dry_run }}" = "true" ] && "echo git" || "git";
-          $GIT config --global user.name 'React Native Bot'
-          $GIT config --global user.email 'bot@reactnative.dev'
-          $GIT commit -am "Bumping template to $VERSION"
-          $GIT push
-          $GIT tag $VERSION
-          $GIT push --tags
+          GIT=(echo git)
+          if [ "${{ inputs.dry_run }}" = "false" ]; then
+            GIT=(git)
+          fi
+          "${GIT[@]}" config --global user.name 'React Native Bot'
+          "${GIT[@]}" config --global user.email 'bot@reactnative.dev'
+          "${GIT[@]}" commit -am "Bumping template to $VERSION"
+          "${GIT[@]}" push
+          "${GIT[@]}" tag $VERSION
+          "${GIT[@]}" push --tags
       - name: Publish NPM
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Set NPM tags
         run: |
-          NPM=$([ "${{ inputs.dry_run }}" = "true" ] && "echo npm" || "npm";
+          NPM=(echo npm)
+          if [ "${{ inputs.dry_run }}" = "false" ]; then
+            NPM=(npm)
+          fi
           IS_LATEST_ON_NPM="${{ inputs.is_latest_on_npm }}"
           if [[ "$IS_LATEST_ON_NPM" == "true" ]]; then
-            $NPM dist-tag add @react-native-community/template@$VERSION latest
+            "${NPM[@]}" dist-tag add @react-native-community/template@$VERSION latest
           fi
           if [[ "$VERSION" == *"rc"* ]]; then
-            $NPM dist-tag add @react-native-community/template@$VERSION next
+            "${NPM[@]}" dist-tag add @react-native-community/template@$VERSION next
           fi
           if [[ "$GITHUB_REF_NAME" == *"-stable" ]]; then
-            $NPM dist-tag add @react-native-community/template@$VERSION $GITHUB_REF_NAME
+            "${NPM[@]}" dist-tag add @react-native-community/template@$VERSION $GITHUB_REF_NAME
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
