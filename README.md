@@ -6,7 +6,7 @@ The template used by `npx @react-native-community/cli init` to bootstrap a React
 
 
 # Create Latest CLI Project
-Using this command create latest react-native project with templete
+Using this command create latest react-native project with this template
 ```
 npx @react-native-community/cli init TestApp
 ```
