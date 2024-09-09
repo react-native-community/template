@@ -12,11 +12,13 @@ npx @react-native-community/cli@latest init TestApp
 ```
 
 # Create Specific Version React-Native CLI Project
-add version flag and specify that existing version of react-native to create project
+Add version flag and specify that existing version of react-native to create project.
+Note that this command will create a new project from the template using the specific version passed to the flag
 
-```
-npx @react-native-community/cli init TestApp --version 0.72.8
-```
+    npx @react-native-community/cli init TestApp --version <VERSION>
+
+Replace `<VERSION>` with the version number you need. For example: 0.75.2.
+
 
 ## Contents
 
