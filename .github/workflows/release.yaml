@@ -52,25 +52,21 @@ jobs:
           "${GIT[@]}" push
           "${GIT[@]}" tag $VERSION
           "${GIT[@]}" push --tags
-      - name: Publish NPM
-        run: npm publish
+      - name: Publish on NPM (with tag if needed)
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Set NPM tags
         run: |
-          NPM=(echo npm)
+          args=(--dry-run)
           if [ "${{ inputs.dry_run }}" = "false" ]; then
-            NPM=(npm)
+            args=()
           fi
           IS_LATEST_ON_NPM="${{ inputs.is_latest_on_npm }}"
           if [[ "$IS_LATEST_ON_NPM" == "true" ]]; then
-            "${NPM[@]}" dist-tag add @react-native-community/template@$VERSION latest
-          fi
-          if [[ "$VERSION" == *"rc"* ]]; then
-            "${NPM[@]}" dist-tag add @react-native-community/template@$VERSION next
-          fi
-          if [[ "$GITHUB_REF_NAME" == *"-stable" ]]; then
-            "${NPM[@]}" dist-tag add @react-native-community/template@$VERSION $GITHUB_REF_NAME
-          fi
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+            npm publish --tag latest "${args[@]}"
+          elif [[ "$VERSION" == *"rc"* ]]; then
+            npm publish --tag next "${args[@]}"
+          elif [[ "$GITHUB_REF_NAME" == *"-stable" ]]; then
+            npm publish --tag "$GITHUB_REF_NAME" "${args[@]}"
+          else
+            npm publish "${args[@]}"
+          if
