@@ -48,6 +48,10 @@ jobs:
           fi
           "${GIT[@]}" config --global user.name 'React Native Bot'
           "${GIT[@]}" config --global user.email 'bot@reactnative.dev'
+          if [ -z "$("${GIT[@]}" status --porcelain)" ]; then
+            echo "No changes, a previous release might have failed at the publish step. Continue to retry."
+            exit 0
+          fi
           "${GIT[@]}" commit -am "Bumping template to $VERSION"
           "${GIT[@]}" push
           "${GIT[@]}" tag $VERSION
