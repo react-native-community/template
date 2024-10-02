@@ -69,4 +69,4 @@ jobs:
             npm publish --tag "$GITHUB_REF_NAME" "${args[@]}"
           else
             npm publish "${args[@]}"
-          if
+          fi
