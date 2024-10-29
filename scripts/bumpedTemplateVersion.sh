@@ -41,7 +41,7 @@ if [[ $1 =~ [0-9]+\.[0-9]+\.[0-9]+ ]]; then
     exit 0;
   fi
   # Bump PATCH
-  PUBLISHED=$(jq -r 'last | .version' <<< $CURRENT_VERSION | awk -F'.' '{ print $1"."$2"."($3+1) }')
+  PUBLISHED=$(jq -r 'if . | type == "array" then last | .version else .version end' <<< $CURRENT_VERSION | awk -F'.' '{ print $1"."$2"."($3+1) }')
   echo $PUBLISHED;
   exit 0
 fi
