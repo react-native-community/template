@@ -1,7 +1,7 @@
 import UIKit
 import React
 import React_RCTAppDelegate
-import ReactCodegen
+import ReactAppDependencyProvider
 
 @main
 class AppDelegate: RCTAppDelegate {
