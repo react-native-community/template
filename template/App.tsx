@@ -8,6 +8,7 @@
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
+  Platform,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -62,6 +63,9 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  // Note: adding hacky padding to avoid importing rn-safe-area-context library but should not be done in production
+  const hackyPadding = Platform.OS === 'android' ? '5%' : 0;
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -71,10 +75,14 @@ function App(): React.JSX.Element {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
-        <Header />
+        <View style={{paddingRight: hackyPadding}}>
+          <Header/>
+        </View>
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
+            paddingHorizontal: hackyPadding,
+            paddingBottom: hackyPadding,
           }}>
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
