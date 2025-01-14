@@ -62,7 +62,7 @@ function App(): React.JSX.Element {
   };
 
   /*
-   * To keep the template simple and small we're adding padding to prevent view 
+   * To keep the template simple and small we're adding padding to prevent view
    * from rendering under the System UI.
    * For bigger apps the reccomendation is to use `react-native-safe-area-context`:
    * https://github.com/AppAndFlow/react-native-safe-area-context
@@ -80,14 +80,14 @@ function App(): React.JSX.Element {
       />
       <ScrollView
         style={backgroundStyle}>
-        <View style={{paddingRight: hackyPadding}}>
+        <View style={{paddingRight: safePadding}}>
           <Header/>
         </View>
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
-            paddingHorizontal: hackyPadding,
-            paddingBottom: hackyPadding,
+            paddingHorizontal: safePadding,
+            paddingBottom: safePadding,
           }}>
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
