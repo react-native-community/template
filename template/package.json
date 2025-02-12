@@ -20,6 +20,7 @@
     "@react-native-community/cli": "15.0.1",
     "@react-native-community/cli-platform-android": "15.0.1",
     "@react-native-community/cli-platform-ios": "15.0.1",
+    "@react-native-community/cli-server-api": "15.0.1",
     "@react-native/babel-preset": "0.78.0-main",
     "@react-native/eslint-config": "0.78.0-main",
     "@react-native/metro-config": "0.78.0-main",
