@@ -7,7 +7,15 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "build:android:apk": "rn-build-version && cd android && ./gradlew clean assembleRelease",
+    "build:android:aab": "rn-build-version && cd android && ./gradlew clean bundleRelease",
+    "build:android:apk:fast": "rn-build-version && cd android && ./gradlew assembleRelease",
+    "build:android:aab:fast": "rn-build-version && cd android && ./gradlew bundleRelease",
+    "build:android:apk:local": "cd android && ./gradlew clean assembleRelease",
+    "build:android:aab:local": "cd android && ./gradlew clean bundleRelease",
+    "build:android:apk:local:fast": "cd android && ./gradlew assembleRelease",
+    "build:android:aab:local:fast": "cd android && ./gradlew bundleRelease"
   },
   "dependencies": {
     "react": "19.0.0",
@@ -31,6 +39,7 @@
     "jest": "^29.6.3",
     "prettier": "2.8.8",
     "react-test-renderer": "19.0.0",
+    "rn-build-version": "^1.2.2",
     "typescript": "5.0.4"
   },
   "engines": {
