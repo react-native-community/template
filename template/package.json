@@ -12,8 +12,7 @@
   "dependencies": {
     "react": "19.1.0",
     "react-native": "0.81.0-rc.0",
-    "@react-native/new-app-screen": "0.81.0-rc.0",
-    "react-native-safe-area-context": "^5.5.1"
+    "@react-native/new-app-screen": "0.81.0-rc.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
