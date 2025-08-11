@@ -9,3 +9,6 @@ yarn-error.log*
 # Files in template directory (when manually testing)
 /template/node_modules
 /template/yarn.lock
+
+# Gradle files that can be ignored
+.gradle/
