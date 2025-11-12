@@ -1,10 +1,10 @@
 name: 🐛 Bug Report
 description: Report a reproducible bug or regression in React Native Community Template.
-labels: ["Needs: Triage :mag:"]
+labels: ['Needs: Triage :mag:']
 body:
   - type: markdown
     attributes:
-      value: "## Reporting a bug to the React Native Community Template"
+      value: '## Reporting a bug to the React Native Community Template'
   - type: markdown
     attributes:
       value: |
@@ -42,7 +42,7 @@ body:
     attributes:
       label: React Native Community Template Version
       description: The version of Template that this issue reproduces on. Bear in mind that only issues on the latest version of the Template will be supported.
-      placeholder: "0.75.0"
+      placeholder: '0.75.0'
     validations:
       required: true
   - type: dropdown
@@ -107,7 +107,7 @@ body:
     attributes:
       label: Reproducer
       description: A link to the public repository that reproduces this bug, using [this template](https://github.com/react-native-community/reproducer-react-native). Reproducers are **mandatory**.
-      placeholder: "https://github.com/<myuser>/<myreproducer>"
+      placeholder: 'https://github.com/<myuser>/<myreproducer>'
     validations:
       required: true
   - type: textarea

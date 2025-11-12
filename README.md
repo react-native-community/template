@@ -4,21 +4,22 @@ The template used by `npx @react-native-community/cli init` to bootstrap a React
 
 [![Build Status][build-badge]][build] [![Version][version-badge]][package] [![MIT License][license-badge]][license] [![PRs Welcome][prs-welcome-badge]][prs-welcome]
 
-
 # Create Latest CLI Project
+
 Using this command create latest react-native project with this template
+
 ```
 npx @react-native-community/cli@latest init TestApp
 ```
 
 # Create Specific Version React-Native CLI Project
+
 Add version flag and specify that existing version of react-native to create project.
 Note that this command will create a new project from the template using the specific version passed to the flag
 
     npx @react-native-community/cli init TestApp --version <VERSION>
 
 Replace `<VERSION>` with the version number you need. For example: 0.75.2.
-
 
 ## Contents
 

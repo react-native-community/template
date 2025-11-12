@@ -19,5 +19,3 @@ jobs:
           node-version: 18
       - name: Run unit tests
         run: npm install && npm test
-
-

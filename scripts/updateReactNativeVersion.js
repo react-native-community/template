@@ -33,7 +33,7 @@ const REACT_NATIVE_SCOPE = '@react-native/';
  */
 function normalizeReactNativeDeps(deps, version) {
   const updated = {};
-  for (const key of Object.keys(deps ?? {}).filter((pkg) =>
+  for (const key of Object.keys(deps ?? {}).filter(pkg =>
     pkg.startsWith(REACT_NATIVE_SCOPE),
   )) {
     updated[key] = version;
@@ -102,7 +102,7 @@ the template.
 `);
     process.exit(1);
   }
-  main(process.argv.pop()).catch((e) => {
+  main(process.argv.pop()).catch(e => {
     throw e;
   });
 }

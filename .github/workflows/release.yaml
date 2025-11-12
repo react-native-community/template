@@ -4,16 +4,16 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "The version of the react-native we the template to use in this release. For example 0.75.0-rc.0"
+        description: 'The version of the react-native we the template to use in this release. For example 0.75.0-rc.0'
         required: true
         type: string
       is_latest_on_npm:
-        description: "Whether we want to tag this template release as `latest` on NPM"
+        description: 'Whether we want to tag this template release as `latest` on NPM'
         required: true
         type: boolean
         default: false
       dry_run:
-        description: "Run without making persistent changes to git or npm"
+        description: 'Run without making persistent changes to git or npm'
         type: boolean
         default: true
 
