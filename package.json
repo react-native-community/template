@@ -1,6 +1,6 @@
 {
   "name": "@react-native-community/template",
-  "version": "0.83.0-rc.2-5e2b3c8",
+  "version": "0.83.0-rc.3-7c30652",
   "description": "The template used by `npx @react-native-community/cli init` to bootstrap a React Native application.",
   "license": "MIT",
   "publishConfig": {
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "jest",
-    "version": "0.83.0-rc.2"
+    "version": "0.83.0-rc.3"
   },
   "type": "commonjs",
   "files": [
