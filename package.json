@@ -1,11 +1,23 @@
 {
-  "private": true,
+  "name": "@react-native-community/template",
+  "version": "0.83.0-main",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
+    "format": "prettier --write .",
     "test": "jest"
   },
+  "type": "commonjs",
+  "files": [
+    "template/*",
+    "template.config.js"
+  ],
   "dependencies": {},
   "devDependencies": {
     "jest": "^29.7.0",
+    "prettier": "^3.6.2",
     "semver": "^7.6.3"
   }
 }
