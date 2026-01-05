@@ -32,7 +32,7 @@ jobs:
       - name: Setup node.js
         uses: actions/setup-node@v4.0.0
         with:
-          node-version: 18
+          node-version: 22
           registry-url: 'https://registry.npmjs.org'
       - name: Determine new template version
         run: echo "VERSION=$(./scripts/bumpedTemplateVersion.sh ${{ inputs.version }})" >> $GITHUB_ENV
