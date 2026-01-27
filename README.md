@@ -37,7 +37,7 @@ Everything inside this repository is [MIT licensed](./LICENSE).
 <!-- badges -->
 
 [build-badge]: https://img.shields.io/github/actions/workflow/status/react-native-community/template/tests.yaml?branch=main&style=flat-square
-[build]: https://github.com/react-native-community/template/actions/workflows/test.yml
+[build]: https://github.com/react-native-community/template/actions/workflows/tests.yaml
 [version-badge]: https://img.shields.io/npm/v/@react-native-community/template.svg?style=flat-square
 [package]: https://www.npmjs.com/package/@react-native-community/template
 [license-badge]: https://img.shields.io/npm/l/@react-native-community/template.svg?style=flat-square
