@@ -24,6 +24,7 @@
     "@react-native-community/cli-platform-ios": "20.1.0",
     "@react-native/babel-preset": "nightly",
     "@react-native/eslint-config": "nightly",
+    "@react-native/jest-preset": "nightly",
     "@react-native/metro-config": "nightly",
     "@react-native/typescript-config": "nightly",
     "@types/jest": "^29.5.13",
