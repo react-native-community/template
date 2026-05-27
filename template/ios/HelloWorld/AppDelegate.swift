@@ -34,9 +34,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 class ReactNativeDelegate: RCTDefaultReactNativeFactoryDelegate {
+#if !RCT_REMOVE_LEGACY_ARCH
+  // Required by `RCTBridgeDelegate` until the legacy architecture is fully
+  // removed. On newer React Native versions this symbol no longer exists, so
+  // the override is compiled out via SWIFT_ACTIVE_COMPILATION_CONDITIONS.
   override func sourceURL(for bridge: RCTBridge) -> URL? {
     self.bundleURL()
   }
+#endif
 
   override func bundleURL() -> URL? {
 #if DEBUG
