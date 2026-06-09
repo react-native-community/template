@@ -19,3 +19,5 @@ jobs:
           node-version: 22
       - name: Run unit tests
         run: npm install && npm test
+      - name: Run template unit tests
+        run: cd template && npm install && npm test
