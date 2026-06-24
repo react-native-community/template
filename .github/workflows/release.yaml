@@ -20,6 +20,7 @@ on:
 jobs:
   publish_template:
     runs-on: ubuntu-latest
+    environment: npm-publish
     steps:
       - name: Safeguard against branch name
         run: |
@@ -32,7 +33,7 @@ jobs:
       - name: Setup node.js
         uses: actions/setup-node@v4.0.0
         with:
-          node-version: 22
+          node-version: 'lts/*'
           registry-url: 'https://registry.npmjs.org'
       - name: Determine new template version
         run: echo "VERSION=$(./scripts/bumpedTemplateVersion.sh ${{ inputs.version }})" >> $GITHUB_ENV
@@ -57,8 +58,6 @@ jobs:
           "${GIT[@]}" tag $VERSION
           "${GIT[@]}" push --tags
       - name: Publish on NPM (with tag if needed)
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           args=(--dry-run)
           if [ "${{ inputs.dry_run }}" = "false" ]; then
