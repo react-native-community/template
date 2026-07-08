@@ -36,25 +36,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
       - name: Setup node.js
-        uses: actions/setup-node@v4.0.0
+        # setup-node@v6 supports npm trusted publishing (OIDC): with `registry-url`
+        # set and no token provided, it configures the registry without writing a
+        # bogus NODE_AUTH_TOKEN placeholder, so `npm publish` performs the OIDC
+        # token exchange. Older versions (e.g. v4) wrote a placeholder token that
+        # made npm attempt token auth instead, failing with E404/ENEEDAUTH.
+        uses: actions/setup-node@v6
         with:
           node-version: 'lts/*'
-          # NOTE: intentionally NOT setting `registry-url` here.
-          # `registry-url` makes setup-node inject a job-wide NODE_AUTH_TOKEN and
-          # write an .npmrc with `_authToken=${NODE_AUTH_TOKEN}`. npm trusted
-          # publishing (OIDC) only activates when NO auth token is configured, so
-          # configuring a token would make `npm publish` skip OIDC entirely.
-          # The default registry is already https://registry.npmjs.org/.
-      - name: Debug OIDC availability
-        # GitHub only injects ACTIONS_ID_TOKEN_REQUEST_URL when `id-token: write`
-        # is actually granted. Prints presence only (never the value/token).
-        run: |
-          if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
-            echo "OIDC id-token IS available -> id-token: write is granted, OIDC can run."
-          else
-            echo "OIDC id-token is NOT available (ACTIONS_ID_TOKEN_REQUEST_URL is empty)."
-            echo "=> GitHub is not granting id-token: write for this run."
-          fi
+          registry-url: 'https://registry.npmjs.org'
+          # Never cache dependencies in a publishing workflow: a poisoned cache
+          # could expose the short-lived OIDC token.
+          package-manager-cache: false
       - name: Determine new template version
         run: echo "VERSION=$(./scripts/bumpedTemplateVersion.sh ${{ inputs.version }})" >> $GITHUB_ENV
       - name: Update versions to input one
