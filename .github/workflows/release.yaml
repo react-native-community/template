@@ -93,3 +93,10 @@ jobs:
           else
             npm publish "${args[@]}"
           fi
+      - name: Dump npm debug log on failure
+        if: failure()
+        # The npm debug log always contains full-detail output (including the
+        # OIDC trusted-publishing decision) regardless of console loglevel.
+        run: |
+          echo "=== npm debug log ==="
+          cat "$HOME"/.npm/_logs/*-debug-0.log 2>/dev/null || cat "$HOME"/.npm/_logs/*.log 2>/dev/null || echo "(no npm debug log found)"
