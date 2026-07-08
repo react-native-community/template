@@ -1,6 +1,6 @@
 {
   "name": "@react-native-community/template",
-  "version": "0.87.0-rc.0-873e347",
+  "version": "0.87.0-rc.0-9f4f7e5",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
