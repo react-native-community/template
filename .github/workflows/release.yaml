@@ -39,7 +39,12 @@ jobs:
         uses: actions/setup-node@v4.0.0
         with:
           node-version: 'lts/*'
-          registry-url: 'https://registry.npmjs.org'
+          # NOTE: intentionally NOT setting `registry-url` here.
+          # `registry-url` makes setup-node inject a job-wide NODE_AUTH_TOKEN and
+          # write an .npmrc with `_authToken=${NODE_AUTH_TOKEN}`. npm trusted
+          # publishing (OIDC) only activates when NO auth token is configured, so
+          # configuring a token would make `npm publish` skip OIDC entirely.
+          # The default registry is already https://registry.npmjs.org/.
       - name: Determine new template version
         run: echo "VERSION=$(./scripts/bumpedTemplateVersion.sh ${{ inputs.version }})" >> $GITHUB_ENV
       - name: Update versions to input one
