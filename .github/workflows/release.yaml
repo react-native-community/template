@@ -21,6 +21,11 @@ jobs:
   publish_template:
     runs-on: ubuntu-latest
     environment: npm-publish
+    permissions:
+      # Required for npm trusted publishing (OIDC token exchange with the registry)
+      id-token: write
+      # Required so the bump commit & tag can be pushed back to the branch
+      contents: write
     steps:
       - name: Safeguard against branch name
         run: |
@@ -35,6 +40,9 @@ jobs:
         with:
           node-version: 'lts/*'
           registry-url: 'https://registry.npmjs.org'
+      - name: Ensure npm supports trusted publishing
+        # Trusted publishing (OIDC) requires npm >= 11.5.1
+        run: npm install -g npm@latest
       - name: Determine new template version
         run: echo "VERSION=$(./scripts/bumpedTemplateVersion.sh ${{ inputs.version }})" >> $GITHUB_ENV
       - name: Update versions to input one
