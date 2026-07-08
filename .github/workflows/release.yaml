@@ -21,6 +21,11 @@ jobs:
   publish_template:
     runs-on: ubuntu-latest
     environment: npm-publish
+    permissions:
+      # Required for npm trusted publishing (OIDC token exchange with the registry)
+      id-token: write
+      # Required so the bump commit & tag can be pushed back to the branch
+      contents: write
     steps:
       - name: Safeguard against branch name
         run: |
