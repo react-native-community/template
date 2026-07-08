@@ -40,9 +40,6 @@ jobs:
         with:
           node-version: 'lts/*'
           registry-url: 'https://registry.npmjs.org'
-      - name: Ensure npm supports trusted publishing
-        # Trusted publishing (OIDC) requires npm >= 11.5.1
-        run: npm install -g npm@latest
       - name: Determine new template version
         run: echo "VERSION=$(./scripts/bumpedTemplateVersion.sh ${{ inputs.version }})" >> $GITHUB_ENV
       - name: Update versions to input one
