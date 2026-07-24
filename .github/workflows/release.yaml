@@ -21,6 +21,11 @@ jobs:
   publish_template:
     runs-on: ubuntu-latest
     environment: npm-publish
+    permissions:
+      # Required for npm trusted publishing (OIDC token exchange with the registry)
+      id-token: write
+      # Required so the bump commit & tag can be pushed back to the branch
+      contents: write
     steps:
       - name: Safeguard against branch name
         run: |
@@ -31,10 +36,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
       - name: Setup node.js
-        uses: actions/setup-node@v4.0.0
+        # setup-node@v6 supports npm trusted publishing (OIDC): with `registry-url`
+        # set and no token provided, it configures the registry without writing a
+        # bogus NODE_AUTH_TOKEN placeholder, so `npm publish` performs the OIDC
+        # token exchange. Older versions (e.g. v4) wrote a placeholder token that
+        # made npm attempt token auth instead, failing with E404/ENEEDAUTH.
+        uses: actions/setup-node@v6
         with:
           node-version: 'lts/*'
           registry-url: 'https://registry.npmjs.org'
+          # Never cache dependencies in a publishing workflow: a poisoned cache
+          # could expose the short-lived OIDC token.
+          package-manager-cache: false
       - name: Determine new template version
         run: echo "VERSION=$(./scripts/bumpedTemplateVersion.sh ${{ inputs.version }})" >> $GITHUB_ENV
       - name: Update versions to input one
