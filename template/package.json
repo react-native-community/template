@@ -8,7 +8,7 @@
     "ios:clear-prebuild-caches": "rm -rf $HOME/Library/Caches/ReactNative",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest",
+    "test": "jest"
   },
   "dependencies": {
     "react": "19.2.3",
