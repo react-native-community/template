@@ -2,6 +2,10 @@
   "name": "@react-native-community/template",
   "version": "0.83.0-main",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/react-native-community/template.git"
+  },
   "publishConfig": {
     "access": "public"
   },
