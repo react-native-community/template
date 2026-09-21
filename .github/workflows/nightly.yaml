@@ -12,19 +12,23 @@ on:
 jobs:
   publish_template_as_nightly:
     runs-on: ubuntu-latest
+    environment: npm-publish
+    permissions:
+      # Required for npm trusted publishing (OIDC token exchange with the registry)
+      id-token: write
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
       - name: Setup node.js
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 'lts/*'
           registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false
       - name: Update versions to nightly
         run: node ./scripts/updateTemplateVersion.js nightly
       - name: Update template/package.json to nightly react-native + @react-native
         run: node ./scripts/updateReactNativeVersion.js nightly
       - name: Publish NPM as Nightly
         run: npm publish --tag nightly
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
