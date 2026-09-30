@@ -20,7 +20,7 @@
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.3",
     "@babel/runtime": "^7.25.0",
-    "@react-native-community/cli": "20.2.0",
+    "@react-native-community/cli": "21.0.0-alpha.1",
     "@react-native/babel-preset": "nightly",
     "@react-native/community-cli-plugin": "nightly",
     "@react-native/eslint-config": "nightly",
