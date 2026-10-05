@@ -19,7 +19,7 @@ class SceneDelegate: RCTDefaultReactNativeFactoryDelegate, UIWindowSceneDelegate
     dependencyProvider = RCTAppDependencyProvider()
     reactNativeFactory = RCTReactNativeFactory(delegate: self)
     window = UIWindow(windowScene: windowScene)
-    
+
     #if DEBUG
     let devMenuConfiguration = RCTDevMenuConfiguration(
       devMenuEnabled: true,
@@ -28,14 +28,12 @@ class SceneDelegate: RCTDefaultReactNativeFactoryDelegate, UIWindowSceneDelegate
     )
     reactNativeFactory?.devMenuConfiguration = devMenuConfiguration
     #endif
-    
+
     reactNativeFactory?.startReactNative(
       withModuleName: "HelloWorld",
       in: window,
       connectionOptions: connectionOptions
     )
-
-   
   }
 
   func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
