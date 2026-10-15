@@ -85,6 +85,9 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    installation {
+        installOptions.add("-d") // Allow version code downgrade (debuggable packages only) during `run-android`
+    }
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
