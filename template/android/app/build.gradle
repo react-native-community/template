@@ -112,7 +112,7 @@ dependencies {
     implementation("com.facebook.react:react-android")
 
     if (hermesEnabled.toBoolean()) {
-        implementation("com.facebook.react:hermes-android")
+        implementation("com.facebook.hermes:hermes-android")
     } else {
         implementation jscFlavor
     }
